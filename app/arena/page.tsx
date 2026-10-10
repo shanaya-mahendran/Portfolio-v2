@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   keywords: ['Hackathons', 'Competitions', 'SmartPark', 'IEEE CS R10', 'Full Stack Developer', 'Shanaya Mahendran'],
 }
 
-export const revalidate = 60 // Revalidate every 60s or on-demand via revalidatePath
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function ArenaPage() {
   const entries = await getPublicArenaEntries()

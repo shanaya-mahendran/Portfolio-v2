@@ -29,6 +29,9 @@ interface Props {
   searchParams: Promise<{ preview?: string }>
 }
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { slug } = await params
   const { preview } = await searchParams
@@ -246,7 +249,7 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
             {entry.evidenceLinks && entry.evidenceLinks.length > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Evidence & Links:</span>
-                {entry.evidenceLinks.map(link => (
+                {entry.evidenceLinks.map((link: any) => (
                   <a
                     key={link.id}
                     href={link.url}
@@ -380,7 +383,7 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
           </section>
 
           {/* Custom Sections if any */}
-          {entry.sections && entry.sections.map(section => (
+          {entry.sections && entry.sections.map((section: any) => (
             <section key={section.id} className="glass-panel" style={{ padding: '32px', borderRadius: 'var(--radius-lg)' }}>
               <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: '0 0 16px' }}>{section.title}</h2>
               <div style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-secondary)', whiteSpace: 'pre-line' }}>

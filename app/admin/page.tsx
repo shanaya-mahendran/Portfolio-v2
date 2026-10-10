@@ -157,7 +157,7 @@ export default async function AdminDashboardPage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {recentProjects.map((p) => (
+            {recentProjects.map((p: any) => (
               <div
                 key={p.id}
                 style={{
@@ -212,7 +212,7 @@ export default async function AdminDashboardPage() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {recentArenaEntries.map((e) => (
+            {recentArenaEntries.map((e: any) => (
               <div
                 key={e.id}
                 style={{
