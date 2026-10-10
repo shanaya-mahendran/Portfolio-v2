@@ -120,8 +120,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
 Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) (or `/admin/login`).
 
 Default provisioned credentials (from `prisma/seed.js`):
-- **Email**: `admin@shanaya.dev`
-- **Password**: `ShanayaAdmin2026!`
+- **Email**: 
+- **Password**: 
 
 *(You can update your credentials or site details anytime in the Admin Settings panel).*
 
