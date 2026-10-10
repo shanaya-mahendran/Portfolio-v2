@@ -37,7 +37,7 @@ const DATA = {
       date: 'May 2026 - Present',
       title: 'Open Source Contributor — Social Summer of Code 2026',
       descriptions: [
-        '42 merged PRs (Counted) I\'m actively contributing to AnthropicBots/ptet-web as a Collaborator, a vibrant open-source project focused on building intelligent, scalable solutions.',
+        '43 merged PRs (Counted) I\'m actively contributing to AnthropicBots/ptet-web as a Collaborator, a vibrant open-source project focused on building intelligent, scalable solutions.',
         'My contributions span backend APIs, full-stack features, and UI enhancements. I\'ve worked on authentication systems, database optimization, and interactive frontend components that improve user experience.'
       ]
     },

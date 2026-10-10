@@ -355,11 +355,43 @@ const DATA = {
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState('all')
+  const [projectList, setProjectList] = useState(DATA.projects)
   const [modalData, setModalData] = useState<typeof DATA.projects[0] | null>(null)
+
+  useEffect(() => {
+    fetch('/api/projects/public')
+      .then(res => res.json())
+      .then(data => {
+        if (data.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          const dbProjects = data.projects.map((p: any) => {
+            let tagsArr = []
+            try {
+              tagsArr = typeof p.tags === 'string' ? JSON.parse(p.tags) : p.tags
+            } catch {
+              tagsArr = [p.category]
+            }
+            return {
+              id: p.slug,
+              title: p.title,
+              description: p.description,
+              category: p.category,
+              tags: Array.isArray(tagsArr) ? tagsArr : [p.category],
+              image: p.image,
+              link: p.link || '#',
+              github: p.github || '#',
+              detail: p.detail
+            }
+          })
+          const learning = DATA.projects.filter(p => p.category === 'learning')
+          setProjectList([...dbProjects, ...learning])
+        }
+      })
+      .catch(() => {})
+  }, [])
   
   const filteredProjects = filter === 'all'
-    ? DATA.projects.filter(p => p.category !== 'learning')
-    : DATA.projects.filter(p => p.category === filter)
+    ? projectList.filter(p => p.category !== 'learning')
+    : projectList.filter(p => p.category === filter)
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {

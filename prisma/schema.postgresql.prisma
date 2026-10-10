@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Project {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  title        String
+  status       String        @default("PUBLISHED") // DRAFT, PUBLISHED, ARCHIVED
+  description  String
+  category     String        // fullstack, web, opensource, learning
+  tags         String        // JSON array string
+  image        String
+  link         String?
+  github       String?
+  detail       String
+  isFeatured   Boolean       @default(false)
+  sortOrder    Int           @default(0)
+  arenaEntries ArenaEntry[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Competition {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  name         String
+  organizer    String
+  year         Int
+  category     String       // Hackathon, Ideathon, Challenge, Open Source
+  location     String?
+  websiteUrl   String?
+  description  String?
+  arenaEntries ArenaEntry[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model ArenaEntry {
+  id                   String             @id @default(cuid())
+  slug                 String             @unique
+  title                String
+  competitionId        String
+  competition          Competition        @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  projectId            String?
+  project              Project?           @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  arenaCategory        String             // PODIUM, ATTEMPT, LAB
+  outcome              String             // AWARD_WINNER, FINALIST, SUBMITTED, DID_NOT_ADVANCE, PROTOTYPE, IN_PROGRESS, ARCHIVED_EXPERIMENT
+  resultDetail         String             // e.g., 3rd place, Trustworthy Smart Ecosystem Mini Ideathon
+  awardTitle           String?
+  placement            String?
+  role                 String             // e.g., Team Leader, HungryBeast
+  teamName             String?
+  teamMembers          String?
+  challengeSummary     String
+  problemStatement     String
+  constraints          String?
+  personalContribution String
+  technicalSolution    String
+  architectureDetails  String?
+  retrospective        String
+  lessonsLearned       String
+  coverImage           String?
+  status               String             @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
+  sortOrder            Int                @default(0)
+  sections             CaseStudySection[]
+  evidenceLinks        EvidenceLink[]
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+}
+
+model CaseStudySection {
+  id           String     @id @default(cuid())
+  arenaEntryId String
+  arenaEntry   ArenaEntry @relation(fields: [arenaEntryId], references: [id], onDelete: Cascade)
+  title        String
+  content      String
+  sectionOrder Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model EvidenceLink {
+  id           String     @id @default(cuid())
+  arenaEntryId String
+  arenaEntry   ArenaEntry @relation(fields: [arenaEntryId], references: [id], onDelete: Cascade)
+  title        String
+  url          String
+  type         String     // GITHUB, DEMO, CERTIFICATE, PRESENTATION, WRITEUP
+  createdAt    DateTime   @default(now())
+}
+
+model MediaAsset {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  altText      String?
+  isPrivate    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model Skill {
+  id               String   @id @default(cuid())
+  name             String
+  category         String   // Frontend, Backend & Databases, Tools & Practices, Languages
+  proficiencyLevel Int      // 0 - 100
+  icon             String?
+  sortOrder        Int      @default(0)
+  isFeatured       Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Experience {
+  id           String   @id @default(cuid())
+  title        String
+  role         String
+  company      String
+  location     String?
+  startDate    String
+  endDate      String?
+  isCurrent    Boolean  @default(false)
+  descriptions String   // JSON array of strings
+  sortOrder    Int      @default(0)
+  status       String   @default("PUBLISHED")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Education {
+  id              String   @id @default(cuid())
+  institution     String
+  degree          String
+  fieldOfStudy    String?
+  cgpa            String?
+  date            String
+  description     String
+  coursesJson     String?  // JSON string containing completed and inProgress lists
+  completedLabel  String?
+  inProgressLabel String?
+  sortOrder       Int      @default(0)
+  status          String   @default("PUBLISHED")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Achievement {
+  id            String   @id @default(cuid())
+  title         String
+  issuer        String
+  date          String
+  description   String?
+  credentialUrl String?
+  sortOrder     Int      @default(0)
+  status        String   @default("PUBLISHED")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model SiteSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  createdAt DateTime @default(now())
+  isRead    Boolean  @default(false)
+}
+
+model Subscriber {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+}

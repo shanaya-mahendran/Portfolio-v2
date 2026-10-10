@@ -42,6 +42,7 @@ export default function Navbar() {
     { href: '/about', label: 'About' },
     { href: '/education', label: 'Education' },
     { href: '/projects', label: 'Projects' },
+    { href: '/arena', label: 'The Arena' },
     { href: '/skills', label: 'Skills' },
     // { href: '/blog', label: 'Blog' },
     { href: '/contact', label: 'Contact' },

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ExternalLink, Code, X, Flame, Rocket, Sparkles, GraduationCap, ChevronDown } from 'lucide-react'
+import AnimatedCounter from '@/components/AnimatedCounter'
 
 const DATA = {
   projects: [
@@ -112,6 +113,35 @@ export default function Home() {
   const [typingText, setTypingText] = useState('')
   const [modalData, setModalData] = useState<typeof DATA.projects[0] | null>(null)
   const [testimonalIndex, setTestimonialIndex] = useState(0)
+  const [projectsList, setProjectsList] = useState(DATA.projects)
+
+  // Hydrate published projects from DB
+  useEffect(() => {
+    fetch('/api/projects/public')
+      .then(res => res.json())
+      .then(data => {
+        if (data.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+          const featured = data.projects.filter((p: any) => p.isFeatured).map((p: any) => {
+            let tagsArr = []
+            try { tagsArr = typeof p.tags === 'string' ? JSON.parse(p.tags) : p.tags } catch { tagsArr = [p.category] }
+            return {
+              id: p.slug,
+              title: p.title,
+              description: p.description,
+              category: p.category,
+              tags: Array.isArray(tagsArr) ? tagsArr : [p.category],
+              image: p.image,
+              link: p.link || '#',
+              github: p.github || '#',
+              detail: p.detail,
+              status: p.status === 'PUBLISHED' ? undefined : p.status
+            }
+          })
+          if (featured.length > 0) setProjectsList(featured)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   // Testimonials Rotation
   useEffect(() => {
@@ -290,32 +320,6 @@ export default function Home() {
     }
   }, [])
 
-  // Counters Logic - Still using Intersection Observer but applied easily
-  useEffect(() => {
-    const stats = document.querySelectorAll('.stat-number')
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target as HTMLElement
-          const target = parseInt(el.dataset.count || '0')
-          let current = 0
-          const step = Math.ceil(target / 40)
-          if(target === 0) { el.textContent = '0'; return }
-          const interval = setInterval(() => {
-            current += step
-            if (current >= target) { 
-              el.textContent = target.toString()
-              clearInterval(interval) 
-            } else { el.textContent = current.toString() }
-          }, 25)
-          observer.unobserve(el)
-        }
-      })
-    }, { threshold: 0.3 })
-    stats.forEach(s => observer.observe(s))
-    return () => observer.disconnect()
-  }, [])
-
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -394,10 +398,26 @@ export default function Home() {
           viewport={{ once: true, margin: '-50px' }}
           style={{ borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', margin: '40px 0 80px', padding: '40px 24px' }}
         >
-          <motion.div variants={itemVariants} className="stat-item"><div className="stat-icon" style={{ color: 'var(--accent)' }}><Flame size={28} strokeWidth={2.1} /></div><div className="stat-number gradient-text" data-count="1">0</div><div className="stat-label">Years Experience</div></motion.div>
-          <motion.div variants={itemVariants} className="stat-item"><div className="stat-icon" style={{ color: 'var(--accent)' }}><Rocket size={28} strokeWidth={2.1} /></div><div className="stat-number gradient-text" data-count="6">0</div><div className="stat-label">Projects Launched</div></motion.div>
-          <motion.div variants={itemVariants} className="stat-item"><div className="stat-icon" style={{ color: 'var(--accent)' }}><Sparkles size={28} strokeWidth={2.1} /></div><div className="stat-number gradient-text" data-count="43">0</div><div className="stat-label">Open Source PRs</div></motion.div>
-          <motion.div variants={itemVariants} className="stat-item"><div className="stat-icon" style={{ color: 'var(--accent)' }}><GraduationCap size={28} strokeWidth={2.1} /></div><div className="stat-number gradient-text" data-count="2">0</div><div className="stat-label">Degrees in Progress</div></motion.div>
+          <motion.div variants={itemVariants} className="stat-item">
+            <div className="stat-icon" style={{ color: 'var(--accent)' }}><Flame size={28} strokeWidth={2.1} /></div>
+            <AnimatedCounter target={1} className="stat-number gradient-text" />
+            <div className="stat-label">Years Experience</div>
+          </motion.div>
+          <motion.div variants={itemVariants} className="stat-item">
+            <div className="stat-icon" style={{ color: 'var(--accent)' }}><Rocket size={28} strokeWidth={2.1} /></div>
+            <AnimatedCounter target={6} className="stat-number gradient-text" />
+            <div className="stat-label">Projects Launched</div>
+          </motion.div>
+          <motion.div variants={itemVariants} className="stat-item">
+            <div className="stat-icon" style={{ color: 'var(--accent)' }}><Sparkles size={28} strokeWidth={2.1} /></div>
+            <AnimatedCounter target={43} className="stat-number gradient-text" />
+            <div className="stat-label">Open Source PRs</div>
+          </motion.div>
+          <motion.div variants={itemVariants} className="stat-item">
+            <div className="stat-icon" style={{ color: 'var(--accent)' }}><GraduationCap size={28} strokeWidth={2.1} /></div>
+            <AnimatedCounter target={2} className="stat-number gradient-text" />
+            <div className="stat-label">Degrees in Progress</div>
+          </motion.div>
         </motion.div>
 
         {/* PROJECTS */}
@@ -408,7 +428,7 @@ export default function Home() {
         
         <div className="carousel-wrap infinite-scroll-wrapper" id="featuredCarousel" style={{ paddingBottom: '32px', width: '100%' }}>
           <div className="infinite-scroll-container">
-            {[...DATA.projects, ...DATA.projects].map((p, index) => (
+            {projectsList.map((p, index) => (
               <motion.div 
                 key={`${p.id}-${index}`} 
                 whileHover={{ y: -8 }}
