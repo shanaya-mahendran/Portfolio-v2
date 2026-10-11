@@ -57,6 +57,9 @@ export default function Navbar() {
     setIsMobileOpen(true)
     document.body.style.overflow = 'hidden'
   }
+  if (pathname?.startsWith('/admin')) {
+    return null
+  }
 
   return (
     <>

@@ -153,16 +153,16 @@ export default function AdminSkillsPage() {
 
       {modalOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.8)', padding: '20px' }}>
-          <div className="glass" style={{ width: '100%', maxWidth: '440px', padding: '28px', borderRadius: 'var(--radius-lg)', background: 'rgba(18, 10, 26, 0.96)' }}>
-            <h2 style={{ fontSize: '1.25rem', margin: '0 0 16px' }}>{editingSkill ? 'Edit Skill' : 'New Skill'}</h2>
+          <div className="glass" style={{ width: '100%', maxWidth: '440px', padding: '28px', borderRadius: 'var(--radius-lg)', background: 'var(--card-bg)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', boxShadow: '0 20px 50px var(--shadow-color)' }}>
+            <h2 style={{ fontSize: '1.25rem', margin: '0 0 16px', color: 'var(--text-primary)' }}>{editingSkill ? 'Edit Skill' : 'New Skill'}</h2>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Skill Name</label>
-                <input required type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }} />
+                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>Skill Name</label>
+                <input required type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }} />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Category</label>
-                <select value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'rgba(18, 10, 26, 0.95)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>Category</label>
+                <select value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }}>
                   <option value="Frontend">Frontend</option>
                   <option value="Backend & Databases">Backend & Databases</option>
                   <option value="Tools & Practices">Tools & Practices</option>
@@ -170,8 +170,8 @@ export default function AdminSkillsPage() {
                 </select>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Proficiency (0-100%)</label>
-                <input type="number" min="0" max="100" value={formData.proficiencyLevel} onChange={e => setFormData({ ...formData, proficiencyLevel: parseInt(e.target.value) || 0 })} style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }} />
+                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>Proficiency (0-100%)</label>
+                <input type="number" min="0" max="100" value={formData.proficiencyLevel} onChange={e => setFormData({ ...formData, proficiencyLevel: parseInt(e.target.value) || 0 })} style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
                 <button type="button" onClick={() => setModalOpen(false)} className="btn btn-outline" style={{ padding: '8px 16px' }}>Cancel</button>

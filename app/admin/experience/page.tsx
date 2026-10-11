@@ -170,34 +170,34 @@ export default function AdminExperiencePage() {
 
       {modalOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.8)', padding: '20px' }}>
-          <div className="glass" style={{ width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', padding: '28px', borderRadius: 'var(--radius-lg)', background: 'rgba(18, 10, 26, 0.96)' }}>
-            <h2 style={{ fontSize: '1.25rem', margin: '0 0 16px' }}>{editingExp ? 'Edit Experience' : 'New Experience'}</h2>
+          <div className="glass" style={{ width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', padding: '28px', borderRadius: 'var(--radius-lg)', background: 'var(--card-bg)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', boxShadow: '0 20px 50px var(--shadow-color)' }}>
+            <h2 style={{ fontSize: '1.25rem', margin: '0 0 16px', color: 'var(--text-primary)' }}>{editingExp ? 'Edit Experience' : 'New Experience'}</h2>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Title</label>
-                  <input required type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }} />
+                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>Title</label>
+                  <input required type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Company</label>
-                  <input required type="text" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }} />
+                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>Company</label>
+                  <input required type="text" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }} />
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Start Date</label>
-                  <input required type="text" value={form.startDate} onChange={e => setForm({ ...form, startDate: e.target.value })} placeholder="Oct 2026" style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }} />
+                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>Start Date</label>
+                  <input required type="text" value={form.startDate} onChange={e => setForm({ ...form, startDate: e.target.value })} placeholder="Oct 2026" style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>End Date</label>
-                  <input type="text" value={form.endDate} onChange={e => setForm({ ...form, endDate: e.target.value })} placeholder="Present" style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }} />
+                  <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>End Date</label>
+                  <input type="text" value={form.endDate} onChange={e => setForm({ ...form, endDate: e.target.value })} placeholder="Present" style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }} />
                 </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px' }}>Bullet Points (one per line)</label>
-                <textarea rows={5} value={form.descriptions} onChange={e => setForm({ ...form, descriptions: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }} />
+                <label style={{ display: 'block', fontSize: '0.8rem', marginBottom: '4px', color: 'var(--text-secondary)' }}>Bullet Points (one per line)</label>
+                <textarea rows={5} value={form.descriptions} onChange={e => setForm({ ...form, descriptions: e.target.value })} style={{ width: '100%', padding: '8px 12px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: 'var(--radius)' }} />
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>

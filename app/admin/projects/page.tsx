@@ -462,7 +462,9 @@ export default function AdminProjectsPage() {
                 padding: '32px',
                 borderRadius: 'var(--radius-lg)',
                 border: '1px solid var(--border-color)',
-                background: 'rgba(18, 10, 26, 0.95)'
+                background: 'var(--card-bg)',
+                color: 'var(--text-primary)',
+                boxShadow: '0 20px 50px var(--shadow-color)'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
@@ -542,7 +544,7 @@ export default function AdminProjectsPage() {
                         padding: '10px 12px',
                         borderRadius: 'var(--radius-sm)',
                         border: '1px solid var(--border-color)',
-                        background: 'rgba(18, 10, 26, 0.9)',
+                        background: 'var(--bg-surface-light)',
                         color: 'var(--text-primary)',
                         outline: 'none'
                       }}
@@ -566,7 +568,7 @@ export default function AdminProjectsPage() {
                         padding: '10px 12px',
                         borderRadius: 'var(--radius-sm)',
                         border: '1px solid var(--border-color)',
-                        background: 'rgba(18, 10, 26, 0.9)',
+                        background: 'var(--bg-surface-light)',
                         color: 'var(--text-primary)',
                         outline: 'none'
                       }}

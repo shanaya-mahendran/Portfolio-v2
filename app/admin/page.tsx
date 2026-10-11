@@ -165,8 +165,8 @@ export default async function AdminDashboardPage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '12px 14px',
-                  borderRadius: 'var(--radius-sm)',
-                  background: 'rgba(255, 255, 255, 0.02)',
+                  borderRadius: 'var(--radius)',
+                  background: 'var(--bg-surface-light)',
                   border: '1px solid var(--border-color)'
                 }}
               >
@@ -220,8 +220,8 @@ export default async function AdminDashboardPage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '12px 14px',
-                  borderRadius: 'var(--radius-sm)',
-                  background: 'rgba(255, 255, 255, 0.02)',
+                  borderRadius: 'var(--radius)',
+                  background: 'var(--bg-surface-light)',
                   border: '1px solid var(--border-color)'
                 }}
               >
