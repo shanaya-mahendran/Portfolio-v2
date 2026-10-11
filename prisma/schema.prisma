@@ -175,6 +175,36 @@ model Achievement {
   updatedAt     DateTime @updatedAt
 }
 
+model LeadershipProgramme {
+  id          String   @id @default(cuid())
+  title       String
+  org         String
+  period      String
+  status      String   @default("Completed")
+  statusColor String?  @default("#10b981")
+  icon        String?  @default("💻")
+  description String
+  activities  String   @default("[]") // JSON string array
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Volunteering {
+  id          String   @id @default(cuid())
+  title       String
+  org         String
+  period      String
+  status      String?
+  statusColor String?
+  icon        String?  @default("🤝")
+  description String
+  activities  String   @default("[]") // JSON string array
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model SiteSettings {
   id        String   @id @default(cuid())
   key       String   @unique

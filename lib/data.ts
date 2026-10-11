@@ -164,6 +164,32 @@ export async function getPublicEducation() {
   }
 }
 
+export async function getPublicProgrammes() {
+  try {
+    return await withTimeout(
+      prisma.leadershipProgramme.findMany({
+        orderBy: { sortOrder: 'asc' }
+      })
+    )
+  } catch (error) {
+    console.warn('[data.ts] getPublicProgrammes database fallback triggered:', error instanceof Error ? error.message : error)
+    return []
+  }
+}
+
+export async function getPublicVolunteering() {
+  try {
+    return await withTimeout(
+      prisma.volunteering.findMany({
+        orderBy: { sortOrder: 'asc' }
+      })
+    )
+  } catch (error) {
+    console.warn('[data.ts] getPublicVolunteering database fallback triggered:', error instanceof Error ? error.message : error)
+    return []
+  }
+}
+
 export async function getPublicSiteSettings() {
   try {
     const rows = await withTimeout(prisma.siteSettings.findMany())

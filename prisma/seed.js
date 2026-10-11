@@ -475,7 +475,7 @@ async function main() {
   }
   console.log('✓ Upserted Experiences:', initialExperiences.length)
 
-  // 8. Seed Education
+  // 8. Seed Education (all milestones)
   const initialEducation = [
     {
       institution: 'University of Moratuwa',
@@ -483,21 +483,25 @@ async function main() {
       fieldOfStudy: 'Information Technology',
       cgpa: 'GPA: 3.76',
       date: 'Jan 2026 – Present',
-      description: 'Pursuing a comprehensive degree in Information Technology focusing on modern software engineering paradigms, database management, and cloud systems.',
+      description: 'Currently pursuing a comprehensive degree in Information Technology with a focus on modern software engineering paradigms, web application development, database management systems, and practical industry-oriented projects. Gaining hands-on experience through lab work and collaborative assignments.',
       completedLabel: 'Semester 2025S1 – Completed',
       inProgressLabel: 'Semester 2025S2 – In Progress',
       coursesJson: JSON.stringify({
         completed: [
-          { code: 'ITE1123', name: 'Fundamentals of Programming', grade: 'A' },
-          { code: 'ITE1213', name: 'Computer Systems', grade: 'A' },
-          { code: 'ITE1713', name: 'Web Design', grade: 'B' },
-          { code: 'ITE1813', name: 'Mathematics and Statistics for IT', grade: 'A-' }
+          { code: 'ITE1123', name: 'Fundamentals of Programming', grade: 'A', knowledge: 'Core programming constructs, algorithms, problem-solving strategies, and introductory software development.' },
+          { code: 'ITE1213', name: 'Computer Systems', grade: 'A', knowledge: 'Hardware architecture, operating system concepts, memory management, and system-level programming.' },
+          { code: 'ITE1713', name: 'Web Design', grade: 'B', knowledge: 'UI/UX principles, HTML/CSS fundamentals, responsive layouts, and accessibility standards.' },
+          { code: 'ITE1813', name: 'Mathematics and Statistics for IT', grade: 'A-', knowledge: 'Applied mathematics, statistical analysis, probability theory, and data-driven decision making.' },
+          { code: 'ITE1913', name: 'Communication Skills Development', grade: 'A+', knowledge: 'Technical presentation, professional writing, teamwork communication, and stakeholder management.' },
+          { code: 'ITE1923', name: 'ICT Skills and Applications', grade: 'A', knowledge: 'Practical computing applications, productivity tools, digital literacy, and ICT project implementation.' }
         ],
         inProgress: [
-          { code: 'ITE1133', name: 'Visual Applications', grade: 'Pending' },
-          { code: 'ITE1223', name: 'System & Design Paradigms', grade: 'Pending' },
-          { code: 'ITE1413', name: 'Fundamentals of Databases', grade: 'Pending' },
-          { code: 'ITE1723', name: 'Web Programming', grade: 'Pending' }
+          { code: 'ITE1133', name: 'Visual Applications', grade: 'Pending', knowledge: 'GUI development, event-driven programming, visual design patterns, and desktop application development.' },
+          { code: 'ITE1223', name: 'System & Design Paradigms', grade: 'Pending', knowledge: 'Software design principles, architectural patterns, systems thinking, and paradigm-driven development.' },
+          { code: 'ITE1413', name: 'Fundamentals of Databases', grade: 'Pending', knowledge: 'Database design, normalization, SQL, transactions, and data modeling for IT applications.' },
+          { code: 'ITE1723', name: 'Web Programming', grade: 'Pending', knowledge: 'Client-server architecture, dynamic web development, JavaScript frameworks, and REST APIs.' },
+          { code: 'ITE1933', name: 'Technical Writing', grade: 'Pending', knowledge: 'Documentation standards, technical report writing, API documentation, and user manual creation.' },
+          { code: 'ITE1943', name: 'ICT Project', grade: 'Pending', knowledge: 'End-to-end project development, agile team collaboration, and delivering a functional IT solution.' }
         ]
       }),
       sortOrder: 1
@@ -508,23 +512,59 @@ async function main() {
       fieldOfStudy: 'Computer Science',
       cgpa: 'CGPA: 3.96',
       date: 'Sep 2025 – Present',
-      description: 'Expanding theoretical computer science foundations in data structures, algorithms, discrete mathematics, and software design principles.',
+      description: 'Expanding knowledge in core theoretical computer science fundamentals including algorithms, data structures, discrete mathematics, and software engineering principles. This program is broadening my perspective by complementing practical IT skills with strong theoretical foundations.',
       completedLabel: 'Completed Courses',
       inProgressLabel: 'Currently In Progress',
       coursesJson: JSON.stringify({
         completed: [
+          { code: 'UNIV 1001', name: 'Online Education Strategies', grade: 'A' },
+          { code: 'ENGL 1102', name: 'English Composition 2', grade: 'A' },
           { code: 'CS 1111', name: 'Introduction to Computer Science', grade: 'A' },
           { code: 'CS 1101', name: 'Programming Fundamentals', grade: 'A+' },
+          { code: 'PSYC 1504', name: 'Introduction to Psychology', grade: 'A' },
           { code: 'MATH 1201', name: 'College Algebra', grade: 'A-' },
+          { code: 'PHIL 1404', name: 'Introduction to Global Ethics', grade: 'A+' },
+          { code: 'CS 1105', name: 'Digital Electronics & Computer Architecture', grade: 'A' },
+          { code: 'MATH 1280', name: 'Introduction to Statistics', grade: 'A+' },
           { code: 'CS 1102', name: 'Programming 1', grade: 'A+' },
-          { code: 'CS 2203', name: 'Databases 1', grade: 'A' }
+          { code: 'CS 2203', name: 'Databases 1', grade: 'A' },
+          { code: 'COM 2001', name: 'Professional Communication', grade: 'A+' },
+          { code: 'ENVS 1301', name: 'Introduction to Environmental Sciences', grade: 'A-' },
+          { code: 'CS 1103', name: 'Programming 2', grade: 'A' },
+          { code: 'CS 2204', name: 'Communications and Networking', grade: 'A' }
         ],
         inProgress: [
+          { code: 'HIST 1421', name: 'Greek and Roman Civilization', grade: 'In Progress' },
+          { code: 'PHIL 1402', name: 'Introduction to Philosophy', grade: 'In Progress' },
           { code: 'CS 2205', name: 'Web Programming 1', grade: 'In Progress' },
           { code: 'CS 2401', name: 'Software Engineering 1', grade: 'In Progress' }
         ]
       }),
       sortOrder: 2
+    },
+    {
+      institution: "St. Anne's Girls' School",
+      degree: 'G.C.E. Advanced Level',
+      fieldOfStudy: 'Physical Science / Technology',
+      cgpa: null,
+      date: '2024',
+      description: 'Completed comprehensive higher secondary education marking the transition into higher education in computing.',
+      completedLabel: null,
+      inProgressLabel: null,
+      coursesJson: JSON.stringify({ completed: [], inProgress: [] }),
+      sortOrder: 3
+    },
+    {
+      institution: 'Alexandra College',
+      degree: 'G.C.E. Ordinary Level',
+      fieldOfStudy: 'Secondary Education',
+      cgpa: null,
+      date: '2021',
+      description: 'Completed comprehensive secondary education marking the transition into higher secondary education.',
+      completedLabel: null,
+      inProgressLabel: null,
+      coursesJson: JSON.stringify({ completed: [], inProgress: [] }),
+      sortOrder: 4
     }
   ]
 
@@ -537,6 +577,128 @@ async function main() {
     }
   }
   console.log('✓ Upserted Education records')
+
+  // 9. Seed Leadership Programmes
+  const initialProgrammes = [
+    {
+      title: 'IEEE Computer Society R10 Summer School 2026',
+      org: 'IEEE Computer Society Sri Lanka Chapter | University of Moratuwa, Sri Lanka',
+      period: 'September 2026',
+      status: 'Completed',
+      statusColor: '#10b981',
+      icon: '💻',
+      description: 'Participated in and completed Sri Lanka’s first-ever IEEE Computer Society Region 10 Summer School, a four-day intensive programme focused on Trustworthy Smart Ecosystems.',
+      activities: JSON.stringify([
+        'SmartPark: Led team HungryBeast to 3rd place in the Trustworthy Smart Ecosystem Mini Ideathon',
+        'Engineered smart system concepts focusing on predictive parking, fairness, and offline-first architectures',
+        'Attended practical sessions covering IoT, connected smart systems, and cybersecurity essentials',
+        'Participated in workshops on Trustworthy AI and hands-on AI development'
+      ]),
+      sortOrder: 1
+    },
+    {
+      title: 'OMLAS Champion 2026',
+      org: 'One Million Leaders Asia (OMLAS) | South & Southeast Asia',
+      period: 'August 2026 – Present',
+      status: 'Almost Completed',
+      statusColor: '#f59e0b',
+      icon: '🌏',
+      description: 'Selected as an OMLAS Champion, a prestigious international leadership program bringing together young changemakers across South and Southeast Asia.',
+      activities: JSON.stringify([
+        'Attending live online workshops on leadership, sustainability, and social innovation',
+        'Receiving one-on-one mentorship from a certified OMLAS Fellow',
+        'Collaborating with young leaders from diverse cultural backgrounds across Asia',
+        'Developing and implementing a community project addressing local challenges'
+      ]),
+      sortOrder: 2
+    },
+    {
+      title: 'National Entrepreneurship Development Programme (NEDP) – Phase 3',
+      org: 'National Innovation Agency (NIA) | University of Moratuwa | Union Bank of Colombo',
+      period: 'June 2026 – October 2026',
+      status: 'Completed',
+      statusColor: '#10b981',
+      icon: '🚀',
+      description: 'Successfully completed the third cohort of this flagship national entrepreneurship programme, equipping aspiring innovators with business model development and venture skills.',
+      activities: JSON.stringify([
+        'Attended structured training sessions on business model development and financial planning',
+        'Received mentorship from industry experts and successful entrepreneurs',
+        'Participated in networking events with investors and innovators',
+        'Developed a venture concept aimed at addressing real-world challenges'
+      ]),
+      sortOrder: 3
+    }
+  ]
+
+  for (const prog of initialProgrammes) {
+    const existing = await prisma.leadershipProgramme.findFirst({ where: { title: prog.title } })
+    if (existing) {
+      await prisma.leadershipProgramme.update({ where: { id: existing.id }, data: prog })
+    } else {
+      await prisma.leadershipProgramme.create({ data: prog })
+    }
+  }
+  console.log('✓ Upserted Leadership Programmes')
+
+  // 10. Seed Volunteering
+  const initialVolunteering = [
+    {
+      title: 'Volunteer',
+      org: '1st International Sustainable Research Symposium 2026 | TRACE Expert City',
+      period: 'September 2026',
+      status: 'Completed',
+      statusColor: '#10b981',
+      icon: '🤝',
+      description: 'Contributed as a volunteer to the preparation and delivery of the 1st International Sustainable Research Symposium 2026 at TRACE Expert City.',
+      activities: JSON.stringify([
+        'Coordinated with organising and volunteer teams to support smooth event operations',
+        'Monitored schedules, session transitions, and overall programme timing',
+        'Supported speakers, participants, and team members while addressing on-site needs',
+        'Maintained clear communication across teams'
+      ]),
+      sortOrder: 1
+    },
+    {
+      title: 'DevConnect Ambassador',
+      org: 'DevConnect',
+      period: 'October 2026 – Present',
+      status: 'Active',
+      statusColor: '#3b82f6',
+      icon: '🌐',
+      description: 'Serving as a DevConnect Ambassador, actively engaging developer communities and advocating for modern engineering practices.',
+      activities: JSON.stringify([
+        'Representing DevConnect across university and developer networks',
+        'Fostering peer collaboration and knowledge exchange on production software engineering',
+        'Promoting workshops, technical initiatives, and industry-aligned skill building'
+      ]),
+      sortOrder: 2
+    },
+    {
+      title: 'Social Media Coordinator',
+      org: 'Y2NPro Project | IEEE Young Professionals Sri Lanka',
+      period: 'Feb 2026 – Present',
+      status: 'Active',
+      statusColor: '#3b82f6',
+      icon: '📡',
+      description: 'Managed social media presence for Y2NPro, a flagship initiative of IEEE Young Professionals Sri Lanka focused on niche technological learning.',
+      activities: JSON.stringify([
+        'Crafted and scheduled technical event promotional material',
+        'Engaged with the national engineering student community',
+        'Expanded audience reach across LinkedIn and Facebook'
+      ]),
+      sortOrder: 3
+    }
+  ]
+
+  for (const vol of initialVolunteering) {
+    const existing = await prisma.volunteering.findFirst({ where: { title: vol.title, org: vol.org } })
+    if (existing) {
+      await prisma.volunteering.update({ where: { id: existing.id }, data: vol })
+    } else {
+      await prisma.volunteering.create({ data: vol })
+    }
+  }
+  console.log('✓ Upserted Volunteering records')
 
   // 9. Seed SiteSettings
   const defaultSettings = [
