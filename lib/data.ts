@@ -203,3 +203,19 @@ export async function getPublicSiteSettings() {
     return {}
   }
 }
+
+export async function getPublicInitiatives() {
+  try {
+    return await withTimeout(
+      prisma.initiative.findMany({
+        where: { visibility: 'PUBLISHED' },
+        include: { milestones: { orderBy: { sortOrder: 'asc' } } },
+        orderBy: { sortOrder: 'asc' }
+      })
+    )
+  } catch (error) {
+    console.warn('[data.ts] getPublicInitiatives database fallback triggered:', error instanceof Error ? error.message : error)
+    return []
+  }
+}
+

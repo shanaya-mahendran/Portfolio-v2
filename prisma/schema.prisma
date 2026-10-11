@@ -227,3 +227,42 @@ model Subscriber {
   email        String   @unique
   subscribedAt DateTime @default(now())
 }
+
+model Initiative {
+  id               String      @id @default(cuid())
+  slug             String      @unique
+  title            String
+  tagline          String?
+  sdgs             String      // JSON array of SDG numbers e.g. "[11,12]"
+  primaryObjective String
+  phase            String      @default("Exploring") // Exploring, Planned, Building, Pilot, Deployed, Impact Verified
+  icon             String?
+  coverColor       String?     // hex accent color for the card
+  problem          String      // Problem statement
+  targetCommunity  String      // Who it serves
+  proposedSolution String      // Technical/operational solution
+  architecture     String?     // System architecture description
+  successCriteria  String?     // Measurable success criteria (JSON array or text)
+  disclaimer       String?     // e.g. proposed, not validated
+  githubUrl        String?
+  researchUrl      String?
+  sortOrder        Int         @default(0)
+  visibility       String      @default("PUBLISHED") // PUBLISHED, DRAFT
+  milestones       Milestone[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model Milestone {
+  id            String      @id @default(cuid())
+  initiativeId  String
+  initiative    Initiative  @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  title         String
+  description   String?
+  targetDate    String?
+  completedDate String?
+  isCompleted   Boolean     @default(false)
+  sortOrder     Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}

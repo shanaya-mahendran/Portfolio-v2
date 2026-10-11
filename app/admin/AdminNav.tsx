@@ -10,6 +10,7 @@ import {
   Cpu,
   Briefcase,
   GraduationCap,
+  Globe,
   Image as ImageIcon,
   Settings,
   LogOut,
@@ -58,6 +59,7 @@ export default function AdminNav({ adminName }: { adminName: string }) {
     { href: '/admin/skills', label: 'Skills', icon: Cpu },
     { href: '/admin/experience', label: 'Experience', icon: Briefcase },
     { href: '/admin/education', label: 'Education', icon: GraduationCap },
+    { href: '/admin/impact', label: 'Impact & SDGs', icon: Globe },
     { href: '/admin/media', label: 'Media', icon: ImageIcon },
     { href: '/admin/settings', label: 'Settings', icon: Settings },
   ]
