@@ -9,14 +9,12 @@ import {
   Swords,
   FlaskConical,
   ArrowLeft,
-  Calendar,
   Users,
   Award,
   Lightbulb,
   AlertTriangle,
   Compass,
   Cpu,
-  FileText,
   ExternalLink,
   ShieldCheck,
   CheckCircle2,
@@ -67,27 +65,35 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
   const getOutcomeBadge = (outcome: string) => {
     switch (outcome) {
       case 'AWARD_WINNER':
-        return { label: 'Award Winner', bg: 'rgba(234, 179, 8, 0.18)', border: 'rgba(234, 179, 8, 0.4)', color: '#facc15' }
+        return { label: 'Award Winner', bg: 'rgba(234, 179, 8, 0.18)', border: 'rgba(234, 179, 8, 0.4)', color: '#d97706' }
       case 'FINALIST':
-        return { label: 'Finalist', bg: 'rgba(168, 85, 247, 0.18)', border: 'rgba(168, 85, 247, 0.4)', color: '#c084fc' }
+        return { label: 'Finalist', bg: 'rgba(168, 85, 247, 0.18)', border: 'rgba(168, 85, 247, 0.4)', color: 'var(--accent)' }
       case 'DID_NOT_ADVANCE':
-        return { label: 'Did Not Advance', bg: 'rgba(148, 163, 184, 0.15)', border: 'rgba(148, 163, 184, 0.3)', color: '#cbd5e1' }
+        return { label: 'Did Not Advance', bg: 'rgba(148, 163, 184, 0.15)', border: 'rgba(148, 163, 184, 0.3)', color: 'var(--text-muted)' }
       case 'SUBMITTED':
-        return { label: 'Submitted', bg: 'rgba(59, 130, 246, 0.15)', border: 'rgba(59, 130, 246, 0.3)', color: '#93c5fd' }
+        return { label: 'Submitted', bg: 'rgba(59, 130, 246, 0.15)', border: 'rgba(59, 130, 246, 0.3)', color: '#3b82f6' }
       case 'PROTOTYPE':
-        return { label: 'Active Prototype', bg: 'rgba(236, 72, 153, 0.15)', border: 'rgba(236, 72, 153, 0.3)', color: '#f472b6' }
+        return { label: 'Active Prototype', bg: 'rgba(236, 72, 153, 0.15)', border: 'rgba(236, 72, 153, 0.3)', color: '#ec4899' }
       default:
-        return { label: outcome.replace(/_/g, ' '), bg: 'rgba(255, 255, 255, 0.1)', border: 'rgba(255, 255, 255, 0.2)', color: '#e2e8f0' }
+        return { label: outcome.replace(/_/g, ' '), bg: 'var(--accent-glow)', border: 'var(--border-color)', color: 'var(--text-primary)' }
     }
   }
 
   const badge = getOutcomeBadge(entry.outcome)
 
   return (
-    <div style={{ minHeight: '100vh', padding: '30px 0 100px' }}>
+    <div style={{ minHeight: '100vh', padding: 'clamp(80px, 10vw, 100px) 0 80px' }}>
       <div className="container" style={{ maxWidth: '960px' }}>
-        {/* Top Back Navigation */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px' }}>
+
+        {/* ── Top Navigation ─────────────────────────────────────────── */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '28px',
+          flexWrap: 'wrap',
+          gap: '12px'
+        }}>
           <Link
             href="/arena"
             style={{
@@ -98,7 +104,8 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
               textDecoration: 'none',
               fontSize: '0.9rem',
               fontWeight: 600,
-              transition: 'color 0.2s ease'
+              transition: 'color 0.2s ease',
+              padding: '6px 0',
             }}
           >
             <ArrowLeft size={16} />
@@ -112,9 +119,9 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
               gap: '6px',
               padding: '4px 12px',
               borderRadius: '20px',
-              background: 'rgba(234, 179, 8, 0.2)',
-              border: '1px solid rgba(234, 179, 8, 0.4)',
-              color: '#facc15',
+              background: 'rgba(234, 179, 8, 0.15)',
+              border: '1px solid rgba(234, 179, 8, 0.35)',
+              color: '#d97706',
               fontSize: '0.78rem',
               fontWeight: 700
             }}>
@@ -124,15 +131,15 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
           )}
         </div>
 
-        {/* Hero Section */}
-        <header className="glass" style={{
-          borderRadius: 'var(--radius-lg)',
+        {/* ── Hero Card ──────────────────────────────────────────────── */}
+        <header className="glass-panel" style={{
           overflow: 'hidden',
-          border: '1px solid var(--border-color)',
-          marginBottom: '40px'
+          marginBottom: '32px',
+          padding: 0,
         }}>
+          {/* Cover image */}
           {entry.coverImage && (
-            <div style={{ position: 'relative', height: '340px', width: '100%' }}>
+            <div style={{ position: 'relative', height: 'clamp(200px, 35vw, 340px)', width: '100%' }}>
               <Image
                 src={entry.coverImage}
                 alt={entry.title}
@@ -141,44 +148,50 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
                 style={{ objectFit: 'cover' }}
                 priority
               />
+              {/* Gradient overlay using theme variables */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to top, rgba(14, 7, 19, 0.95) 0%, rgba(14, 7, 19, 0.3) 60%, transparent 100%)'
+                background: 'linear-gradient(to top, var(--card-bg) 0%, transparent 60%)',
+                opacity: 0.95,
               }} />
 
-              {/* Floating badges */}
+              {/* Floating badges on image */}
               <div style={{
                 position: 'absolute',
-                top: 20,
-                left: 20,
+                top: 16,
+                left: 16,
                 display: 'flex',
                 gap: '8px',
                 flexWrap: 'wrap'
               }}>
                 <span style={{
-                  padding: '5px 14px',
+                  padding: '5px 12px',
                   borderRadius: '20px',
-                  fontSize: '0.78rem',
+                  fontSize: '0.75rem',
                   fontWeight: 700,
-                  background: 'rgba(14, 7, 19, 0.85)',
+                  background: 'var(--card-bg)',
                   backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(181, 136, 211, 0.35)',
+                  border: '1px solid var(--border-color)',
                   color: 'var(--accent)',
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '5px'
                 }}>
-                  {entry.arenaCategory === 'PODIUM' && <Trophy size={14} style={{ color: '#facc15' }} />}
-                  {entry.arenaCategory === 'ATTEMPT' && <Swords size={14} style={{ color: '#818cf8' }} />}
-                  {entry.arenaCategory === 'LAB' && <FlaskConical size={14} style={{ color: '#c084fc' }} />}
-                  <span>{entry.arenaCategory === 'PODIUM' ? 'Podium Finish' : entry.arenaCategory === 'ATTEMPT' ? 'The Attempt' : 'The Experimental Lab'}</span>
+                  {entry.arenaCategory === 'PODIUM' && <Trophy size={13} style={{ color: '#d97706' }} />}
+                  {entry.arenaCategory === 'ATTEMPT' && <Swords size={13} style={{ color: 'var(--accent)' }} />}
+                  {entry.arenaCategory === 'LAB' && <FlaskConical size={13} style={{ color: 'var(--accent)' }} />}
+                  <span>
+                    {entry.arenaCategory === 'PODIUM' ? 'Podium Finish'
+                      : entry.arenaCategory === 'ATTEMPT' ? 'The Attempt'
+                        : 'The Experimental Lab'}
+                  </span>
                 </span>
 
                 <span style={{
                   padding: '5px 12px',
                   borderRadius: '20px',
-                  fontSize: '0.78rem',
+                  fontSize: '0.75rem',
                   fontWeight: 700,
                   background: badge.bg,
                   border: `1px solid ${badge.border}`,
@@ -191,9 +204,10 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
             </div>
           )}
 
-          <div style={{ padding: '36px 32px' }}>
+          <div style={{ padding: 'clamp(20px, 4vw, 36px) clamp(16px, 4vw, 32px)' }}>
+            {/* Competition label */}
             <div style={{
-              fontSize: '0.85rem',
+              fontSize: '0.82rem',
               fontWeight: 700,
               color: 'var(--accent)',
               textTransform: 'uppercase',
@@ -203,53 +217,74 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
               {entry.competition.name} • {entry.competition.year}
             </div>
 
+            {/* Title */}
             <h1 style={{
-              fontSize: 'clamp(2rem, 4vw, 2.7rem)',
+              fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
               fontWeight: 800,
               lineHeight: 1.2,
               margin: '0 0 20px',
-              color: 'var(--text-primary)'
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-heading)',
             }}>
               {entry.title}
             </h1>
 
-            {/* Quick Metadata Pill Matrix */}
+            {/* No cover image badges — show inline if no image */}
+            {!entry.coverImage && (
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                <span style={{
+                  padding: '5px 12px', borderRadius: '20px', fontSize: '0.78rem', fontWeight: 700,
+                  background: 'var(--accent-glow)', border: '1px solid var(--border-color)',
+                  color: 'var(--accent)', display: 'inline-flex', alignItems: 'center', gap: '5px'
+                }}>
+                  {entry.arenaCategory === 'PODIUM' && <Trophy size={13} />}
+                  {entry.arenaCategory === 'ATTEMPT' && <Swords size={13} />}
+                  {entry.arenaCategory === 'LAB' && <FlaskConical size={13} />}
+                  <span>{entry.arenaCategory === 'PODIUM' ? 'Podium Finish' : entry.arenaCategory === 'ATTEMPT' ? 'The Attempt' : 'The Experimental Lab'}</span>
+                </span>
+                <span style={{
+                  padding: '5px 12px', borderRadius: '20px', fontSize: '0.78rem', fontWeight: 700,
+                  background: badge.bg, border: `1px solid ${badge.border}`, color: badge.color
+                }}>
+                  {badge.label}
+                </span>
+              </div>
+            )}
+
+            {/* Metadata grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-              gap: '14px',
-              padding: '18px 20px',
-              borderRadius: 'var(--radius-md)',
-              background: 'rgba(255, 255, 255, 0.02)',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+              gap: '12px',
+              padding: '16px',
+              borderRadius: 'var(--radius)',
+              background: 'var(--bg-surface-light)',
               border: '1px solid var(--border-color)',
-              marginBottom: '24px'
+              marginBottom: '20px'
             }}>
               <div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>My Role</div>
-                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '2px' }}>{entry.role}</div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>My Role</div>
+                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>{entry.role}</div>
               </div>
-
               <div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Team</div>
-                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '2px' }}>{entry.teamName || 'Solo Contributor'}</div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Team</div>
+                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>{entry.teamName || 'Solo'}</div>
               </div>
-
               <div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Verified Result</div>
-                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: badge.color, marginTop: '2px' }}>{entry.resultDetail || badge.label}</div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Result</div>
+                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: badge.color, marginTop: '4px' }}>{entry.resultDetail || badge.label}</div>
               </div>
-
               <div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Year & Organizer</div>
-                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '2px' }}>{entry.competition.year} • {entry.competition.organizer}</div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.5px' }}>Year</div>
+                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>{entry.competition.year}</div>
               </div>
             </div>
 
             {/* Evidence Links */}
             {entry.evidenceLinks && entry.evidenceLinks.length > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Evidence & Links:</span>
-                {entry.evidenceLinks.map((link: any) => (
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>Links:</span>
+                {entry.evidenceLinks.map((link: { id: string; url: string; title: string }) => (
                   <a
                     key={link.id}
                     href={link.url}
@@ -258,15 +293,15 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
                     className="btn btn-outline"
                     style={{
                       padding: '6px 14px',
-                      fontSize: '0.82rem',
+                      fontSize: '0.8rem',
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '6px',
+                      gap: '5px',
                       borderRadius: '20px'
                     }}
                   >
                     <span>{link.title}</span>
-                    <ExternalLink size={13} />
+                    <ExternalLink size={12} />
                   </a>
                 ))}
               </div>
@@ -274,73 +309,91 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
           </div>
         </header>
 
-        {/* Deep Dive Case Study Content Grid */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          {/* Section: Challenge Summary */}
-          <section className="glass-panel" style={{ padding: '32px', borderRadius: 'var(--radius-lg)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ color: 'var(--accent)' }}><Compass size={22} /></div>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0 }}>The Challenge & Core Problem</h2>
+        {/* ── Case Study Sections ─────────────────────────────────────── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(16px, 3vw, 28px)' }}>
+
+          {/* Challenge & Problem */}
+          <section className="glass-panel" style={{ padding: 'clamp(20px, 4vw, 32px)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
+              <Compass size={20} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+              <h2 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>
+                The Challenge & Core Problem
+              </h2>
             </div>
-            <div style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-secondary)' }}>
-              <p style={{ margin: '0 0 16px' }}>{entry.challengeSummary}</p>
-              <div style={{
-                padding: '18px 20px',
-                borderRadius: 'var(--radius-sm)',
-                background: 'rgba(255, 255, 255, 0.02)',
-                borderLeft: '3px solid var(--accent)'
-              }}>
-                <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: '6px' }}>Problem Statement</div>
-                <div>{entry.problemStatement}</div>
+            <p style={{ fontSize: '0.97rem', lineHeight: 1.75, color: 'var(--text-secondary)', marginBottom: '16px' }}>
+              {entry.challengeSummary}
+            </p>
+            <div style={{
+              padding: '16px 20px',
+              borderRadius: 'var(--radius)',
+              background: 'var(--bg-surface-light)',
+              borderLeft: '3px solid var(--accent)'
+            }}>
+              <div style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', fontSize: '0.88rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                Problem Statement
+              </div>
+              <div style={{ color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.95rem' }}>
+                {entry.problemStatement}
               </div>
             </div>
 
             {entry.constraints && (
-              <div style={{ marginTop: '20px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#facc15', fontSize: '0.88rem', fontWeight: 600, marginBottom: '6px' }}>
-                  <AlertTriangle size={16} />
-                  <span>Constraints & Real-World Pressures:</span>
+              <div style={{
+                marginTop: '16px',
+                padding: '14px 18px',
+                borderRadius: 'var(--radius)',
+                background: 'rgba(234, 179, 8, 0.06)',
+                border: '1px solid rgba(234, 179, 8, 0.2)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#d97706', fontSize: '0.85rem', fontWeight: 700, marginBottom: '6px' }}>
+                  <AlertTriangle size={15} />
+                  <span>Constraints & Real-World Pressures</span>
                 </div>
-                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
+                <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
                   {entry.constraints}
                 </p>
               </div>
             )}
           </section>
 
-          {/* Section: My Role & Contribution */}
-          <section className="glass-panel" style={{ padding: '32px', borderRadius: 'var(--radius-lg)' }}>
+          {/* Role & Contribution */}
+          <section className="glass-panel" style={{ padding: 'clamp(20px, 4vw, 32px)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ color: 'var(--accent)' }}><Users size={22} /></div>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0 }}>Leadership & Personal Contribution</h2>
+              <Users size={20} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+              <h2 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>
+                Leadership & Personal Contribution
+              </h2>
             </div>
-            <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-secondary)', margin: 0 }}>
+            <p style={{ fontSize: '0.97rem', lineHeight: 1.75, color: 'var(--text-secondary)', margin: 0 }}>
               {entry.personalContribution}
             </p>
           </section>
 
-          {/* Section: Technical Solution & Architecture */}
-          <section className="glass-panel" style={{ padding: '32px', borderRadius: 'var(--radius-lg)' }}>
+          {/* Technical Solution */}
+          <section className="glass-panel" style={{ padding: 'clamp(20px, 4vw, 32px)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ color: 'var(--accent)' }}><Cpu size={22} /></div>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0 }}>The Technical Solution</h2>
+              <Cpu size={20} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+              <h2 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>
+                The Technical Solution
+              </h2>
             </div>
-            <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-secondary)', margin: '0 0 16px' }}>
+            <p style={{ fontSize: '0.97rem', lineHeight: 1.75, color: 'var(--text-secondary)', marginBottom: entry.architectureDetails ? '16px' : 0 }}>
               {entry.technicalSolution}
             </p>
 
             {entry.architectureDetails && (
               <div style={{
-                padding: '20px',
-                borderRadius: 'var(--radius-sm)',
-                background: 'rgba(14, 7, 19, 0.6)',
+                padding: '18px 20px',
+                borderRadius: 'var(--radius)',
+                background: 'var(--bg-surface-light)',
                 border: '1px solid var(--border-color)',
-                fontFamily: 'monospace',
-                fontSize: '0.9rem',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.88rem',
                 color: 'var(--accent)',
-                lineHeight: 1.6
+                lineHeight: 1.65,
+                overflowX: 'auto',
               }}>
-                <div style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginBottom: '6px', textTransform: 'uppercase' }}>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.72rem', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                   // Architecture Specifications
                 </div>
                 {entry.architectureDetails}
@@ -348,58 +401,66 @@ export default async function ArenaDetailPage({ params, searchParams }: Props) {
             )}
           </section>
 
-          {/* Section: The Retrospective & Lessons Learned */}
+          {/* Retrospective */}
           <section className="glass-panel" style={{
-            padding: '32px',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid rgba(234, 179, 8, 0.3)',
-            background: 'linear-gradient(180deg, rgba(234, 179, 8, 0.04) 0%, rgba(18, 10, 26, 0.8) 100%)'
+            padding: 'clamp(20px, 4vw, 32px)',
+            borderTop: '2px solid rgba(234, 179, 8, 0.3)',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ color: '#facc15' }}><BookOpen size={22} /></div>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0 }}>
-                The Retrospective <span style={{ color: '#facc15', fontSize: '0.9rem', fontWeight: 500 }}>(What Worked & What Failed)</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
+              <BookOpen size={20} style={{ color: '#d97706', flexShrink: 0 }} />
+              <h2 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>
+                The Retrospective{' '}
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 500 }}>
+                  (What Worked & What Failed)
+                </span>
               </h2>
             </div>
 
-            <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-secondary)', margin: '0 0 24px' }}>
+            <p style={{ fontSize: '0.97rem', lineHeight: 1.75, color: 'var(--text-secondary)', marginBottom: '20px' }}>
               {entry.retrospective}
             </p>
 
             <div style={{
-              padding: '20px 24px',
-              borderRadius: 'var(--radius-md)',
-              background: 'rgba(181, 136, 211, 0.08)',
-              border: '1px solid rgba(181, 136, 211, 0.25)'
+              padding: '20px',
+              borderRadius: 'var(--radius)',
+              background: 'var(--accent-glow)',
+              border: '1px solid var(--border-color)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', fontWeight: 700, fontSize: '0.95rem', marginBottom: '8px' }}>
-                <Sparkles size={18} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', fontWeight: 700, fontSize: '0.9rem', marginBottom: '10px' }}>
+                <Sparkles size={17} />
                 <span>Core Engineering Takeaways & Lessons Learned</span>
               </div>
-              <p style={{ margin: 0, color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: 1.65 }}>
+              <p style={{ margin: 0, color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: 1.7 }}>
                 {entry.lessonsLearned}
               </p>
             </div>
           </section>
 
-          {/* Custom Sections if any */}
-          {entry.sections && entry.sections.map((section: any) => (
-            <section key={section.id} className="glass-panel" style={{ padding: '32px', borderRadius: 'var(--radius-lg)' }}>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 700, margin: '0 0 16px' }}>{section.title}</h2>
-              <div style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-secondary)', whiteSpace: 'pre-line' }}>
+          {/* Custom sections */}
+          {entry.sections && entry.sections.map((section: { id: string; title: string; content: string }) => (
+            <section key={section.id} className="glass-panel" style={{ padding: 'clamp(20px, 4vw, 32px)' }}>
+              <h2 style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 700, margin: '0 0 14px', color: 'var(--text-primary)' }}>
+                {section.title}
+              </h2>
+              <div style={{ fontSize: '0.97rem', lineHeight: 1.75, color: 'var(--text-secondary)', whiteSpace: 'pre-line' }}>
                 {section.content}
               </div>
             </section>
           ))}
         </div>
 
-        {/* Bottom Call to Action */}
-        <div style={{ textAlign: 'center', marginTop: '60px' }}>
-          <Link href="/arena" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 28px' }}>
+        {/* ── Bottom CTA ─────────────────────────────────────────────── */}
+        <div style={{ textAlign: 'center', marginTop: '48px' }}>
+          <Link
+            href="/arena"
+            className="btn btn-outline"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 28px' }}
+          >
             <ArrowLeft size={16} />
             <span>Explore All Battles in The Arena</span>
           </Link>
         </div>
+
       </div>
     </div>
   )

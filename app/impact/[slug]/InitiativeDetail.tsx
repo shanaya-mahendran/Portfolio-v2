@@ -66,7 +66,7 @@ function Section({ icon: Icon, title, children }: { icon: React.ElementType; tit
       initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.45 }}
       className="glass-panel"
-      style={{ padding: '28px 32px' }}
+      style={{ padding: 'clamp(18px, 4vw, 28px)' }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
         <Icon size={18} style={{ color: 'var(--accent)', flexShrink: 0 }} />
@@ -100,17 +100,17 @@ export default function InitiativeDetail({ initiative: init }: { initiative: Ini
           style={{ padding: 0, overflow: 'hidden', marginBottom: '28px' }}
         >
           <div style={{ height: '5px', background: `linear-gradient(90deg, ${accentColor}, ${accentColor}88)` }} />
-          <div style={{ padding: '36px 40px' }}>
+          <div style={{ padding: 'clamp(20px, 4vw, 36px)' }}>
             {/* SDG pills */}
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
               {init.sdgs.map(s => (
-                <span key={s} title={SDG_LABELS[s]} style={{ padding: '4px 12px', borderRadius: '12px', fontSize: '0.72rem', fontWeight: 700, background: 'rgba(181,136,211,0.12)', color: 'var(--accent)', border: '1px solid rgba(181,136,211,0.25)' }}>
+                <span key={s} title={SDG_LABELS[s]} style={{ padding: '4px 12px', borderRadius: '12px', fontSize: '0.72rem', fontWeight: 700, background: 'var(--accent-glow)', color: 'var(--accent)', border: '1px solid var(--border-color)' }}>
                   {SDG_LABELS[s] || `SDG ${s}`}
                 </span>
               ))}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '18px' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '18px', flexWrap: 'wrap' }}>
               <span style={{ fontSize: '3rem', lineHeight: 1 }}>{init.icon || '🌍'}</span>
               <div style={{ flex: 1 }}>
                 <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', fontFamily: 'var(--font-heading)', margin: '0 0 8px', lineHeight: 1.25 }}>
@@ -142,7 +142,7 @@ export default function InitiativeDetail({ initiative: init }: { initiative: Ini
                     <div key={phase} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, minWidth: '60px' }}>
                       <div style={{
                         width: '100%', height: '6px', borderRadius: '3px',
-                        background: done ? (idx === currentPhaseIdx ? `linear-gradient(90deg, ${accentColor}, ${ps.color})` : accentColor) : 'rgba(255,255,255,0.06)',
+                        background: done ? (idx === currentPhaseIdx ? `linear-gradient(90deg, ${accentColor}, ${ps.color})` : accentColor) : 'var(--border-color)',
                         marginBottom: '6px', transition: 'background 0.3s ease'
                       }} />
                       <span style={{ fontSize: '0.58rem', color: done ? phaseStyle.color : 'var(--text-muted)', fontWeight: done ? 700 : 400, textAlign: 'center', lineHeight: 1.2 }}>
@@ -155,7 +155,7 @@ export default function InitiativeDetail({ initiative: init }: { initiative: Ini
             </div>
 
             {/* Links */}
-            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
               {init.githubUrl && (
                 <a href={init.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 16px', fontSize: '0.82rem' }}>
                   <ExternalLink size={14} /> GitHub Repository
@@ -202,7 +202,7 @@ export default function InitiativeDetail({ initiative: init }: { initiative: Ini
                     key={m.id}
                     initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }} transition={{ delay: idx * 0.06 }}
-                    style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', padding: '14px 16px', borderRadius: '10px', background: m.isCompleted ? 'rgba(var(--accent-rgb, 181,136,211),0.06)' : 'rgba(255,255,255,0.02)', border: `1px solid ${m.isCompleted ? 'rgba(181,136,211,0.2)' : 'var(--border-color)'}` }}
+                    style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', padding: '14px 16px', borderRadius: '10px', background: m.isCompleted ? 'var(--accent-glow)' : 'var(--bg-surface-light)', border: `1px solid ${m.isCompleted ? 'var(--border-color)' : 'var(--border-color)'}` }}
                   >
                     <div style={{ marginTop: '2px', flexShrink: 0 }}>
                       {m.isCompleted

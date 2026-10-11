@@ -1,6 +1,6 @@
 import prisma from './prisma'
 import { getAuthenticatedAdmin } from './auth'
-import { FALLBACK_ARENA_ENTRIES, FallbackArenaEntry } from './fallback-data'
+import { FALLBACK_ARENA_ENTRIES, FallbackArenaEntry, FALLBACK_INITIATIVES } from './fallback-data'
 
 async function withTimeout<T>(promise: Promise<T>, ms = 2500): Promise<T> {
   let timer: NodeJS.Timeout
@@ -206,16 +206,18 @@ export async function getPublicSiteSettings() {
 
 export async function getPublicInitiatives() {
   try {
-    return await withTimeout(
+    const rows = await withTimeout(
       prisma.initiative.findMany({
         where: { visibility: 'PUBLISHED' },
         include: { milestones: { orderBy: { sortOrder: 'asc' } } },
         orderBy: { sortOrder: 'asc' }
       })
     )
+    if (rows && rows.length > 0) return rows
+    return FALLBACK_INITIATIVES as any
   } catch (error) {
     console.warn('[data.ts] getPublicInitiatives database fallback triggered:', error instanceof Error ? error.message : error)
-    return []
+    return FALLBACK_INITIATIVES as any
   }
 }
 

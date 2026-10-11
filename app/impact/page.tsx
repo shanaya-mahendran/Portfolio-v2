@@ -11,7 +11,7 @@ export const metadata = {
 export default async function ImpactPage() {
   const initiatives = await getPublicInitiatives()
 
-  const parsed = initiatives.map((init) => {
+  const parsed = initiatives.map((init: any) => {
     let sdgs: number[] = []
     let successCriteria: string[] = []
 
@@ -41,7 +41,7 @@ export default async function ImpactPage() {
       disclaimer: init.disclaimer,
       githubUrl: init.githubUrl,
       researchUrl: init.researchUrl,
-      milestones: init.milestones.map((m) => ({
+      milestones: (init.milestones || []).map((m: any) => ({
         id: m.id,
         title: m.title,
         description: m.description,

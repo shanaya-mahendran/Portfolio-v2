@@ -4,9 +4,14 @@ import InitiativeDetail from './InitiativeDetail'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+interface Props {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params
   const initiatives = await getPublicInitiatives()
-  const init = initiatives.find(i => i.slug === params.slug)
+  const init = initiatives.find((i: any) => i.slug === slug)
   if (!init) return { title: 'Not Found' }
   return {
     title: `${init.title} | Impact & SDGs | Shanaya Mahendran`,
@@ -14,50 +19,65 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function InitiativePage({ params }: { params: { slug: string } }) {
+export default async function InitiativePage({ params }: Props) {
+  const { slug } = await params
   const initiatives = await getPublicInitiatives()
-  const init = initiatives.find(i => i.slug === params.slug)
-  if (!init) notFound()
+  const raw = initiatives.find((i: any) => i.slug === slug)
 
-  let sdgs: number[] = []
-  let successCriteria: string[] = []
-
-  try { sdgs = JSON.parse(init.sdgs) } catch {}
-  try {
-    const sc = JSON.parse(init.successCriteria || '[]')
-    successCriteria = Array.isArray(sc) ? sc : [init.successCriteria || '']
-  } catch {
-    if (init.successCriteria) successCriteria = [init.successCriteria]
+  // notFound() throws so after this point raw is guaranteed to exist
+  if (!raw) {
+    notFound()
   }
 
-  const parsed = {
-    id: init.id,
-    slug: init.slug,
-    title: init.title,
-    tagline: init.tagline,
+  // parse SDGs
+  let sdgs: number[] = []
+  try { sdgs = JSON.parse(raw.sdgs) } catch {}
+
+  // parse success criteria
+  let successCriteria: string[] = []
+  try {
+    const sc = JSON.parse(raw.successCriteria ?? '[]')
+    successCriteria = Array.isArray(sc) ? sc : (raw.successCriteria ? [raw.successCriteria] : [])
+  } catch {
+    if (raw.successCriteria) successCriteria = [raw.successCriteria]
+  }
+
+  const initiative = {
+    id: raw.id,
+    slug: raw.slug,
+    title: raw.title,
+    tagline: raw.tagline ?? null,
     sdgs,
-    primaryObjective: init.primaryObjective,
-    phase: init.phase,
-    icon: init.icon,
-    coverColor: init.coverColor,
-    problem: init.problem,
-    targetCommunity: init.targetCommunity,
-    proposedSolution: init.proposedSolution,
-    architecture: init.architecture,
+    primaryObjective: raw.primaryObjective,
+    phase: raw.phase,
+    icon: raw.icon ?? null,
+    coverColor: raw.coverColor ?? null,
+    problem: raw.problem,
+    targetCommunity: raw.targetCommunity,
+    proposedSolution: raw.proposedSolution,
+    architecture: raw.architecture ?? null,
     successCriteria,
-    disclaimer: init.disclaimer,
-    githubUrl: init.githubUrl,
-    researchUrl: init.researchUrl,
-    milestones: init.milestones.map((m) => ({
+    disclaimer: raw.disclaimer ?? null,
+    githubUrl: raw.githubUrl ?? null,
+    researchUrl: raw.researchUrl ?? null,
+    milestones: (raw.milestones ?? []).map((m: {
+      id: string
+      title: string
+      description?: string | null
+      targetDate?: string | null
+      completedDate?: string | null
+      isCompleted: boolean
+      sortOrder: number
+    }) => ({
       id: m.id,
       title: m.title,
-      description: m.description,
-      targetDate: m.targetDate,
-      completedDate: m.completedDate,
+      description: m.description ?? null,
+      targetDate: m.targetDate ?? null,
+      completedDate: m.completedDate ?? null,
       isCompleted: m.isCompleted,
       sortOrder: m.sortOrder,
     })),
   }
 
-  return <InitiativeDetail initiative={parsed} />
+  return <InitiativeDetail initiative={initiative} />
 }

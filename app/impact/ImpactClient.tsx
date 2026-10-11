@@ -109,8 +109,8 @@ function PhaseTracker({ current }: { current: string }) {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '70px' }}>
               <div style={{
                 width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: done ? 'var(--accent)' : active ? style.bg : 'rgba(255,255,255,0.04)',
-                border: `2px solid ${done ? 'var(--accent)' : active ? style.color : 'rgba(255,255,255,0.1)'}`,
+                background: done ? 'var(--accent)' : active ? style.bg : 'var(--bg-surface-light)',
+                border: `2px solid ${done ? 'var(--accent)' : active ? style.color : 'var(--border-color)'}`,
                 transition: 'all 0.3s ease', flexShrink: 0
               }}>
                 {done ? (
@@ -118,7 +118,7 @@ function PhaseTracker({ current }: { current: string }) {
                 ) : active ? (
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: style.color }} />
                 ) : (
-                  <Circle size={10} style={{ color: 'rgba(255,255,255,0.2)' }} />
+                  <Circle size={10} style={{ color: 'var(--text-muted)' }} />
                 )}
               </div>
               <span style={{
@@ -135,7 +135,7 @@ function PhaseTracker({ current }: { current: string }) {
                 flex: 1, height: '2px', minWidth: '12px',
                 background: idx < currentIdx
                   ? 'var(--accent)'
-                  : 'rgba(255,255,255,0.06)',
+                  : 'var(--border-color)',
                 marginBottom: '20px', transition: 'background 0.3s ease'
               }} />
             )}
@@ -165,7 +165,7 @@ function InitiativeCard({ item, index }: { item: InitiativeItem; index: number }
       {/* Colored top accent bar */}
       <div style={{ height: '4px', background: `linear-gradient(90deg, ${accentColor}, ${accentColor}88)` }} />
 
-      <div style={{ padding: '28px 32px 24px' }}>
+      <div style={{ padding: 'clamp(18px, 4vw, 28px) clamp(16px, 4vw, 32px)' }}>
         {/* Header row */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -199,7 +199,7 @@ function InitiativeCard({ item, index }: { item: InitiativeItem; index: number }
         {/* Milestone progress bar */}
         {totalMilestones > 0 && (
           <div style={{ marginTop: '16px' }}>
-            <div style={{ height: '4px', borderRadius: '4px', background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+            <div style={{ height: '4px', borderRadius: '4px', background: 'var(--border-color)', overflow: 'hidden' }}>
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: `${(completedMilestones / totalMilestones) * 100}%` }}
@@ -271,11 +271,11 @@ export default function ImpactClient({ initiatives }: Props) {
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.5 }}
           className="glass-panel"
-          style={{ marginTop: '60px', padding: '40px', position: 'relative', overflow: 'hidden' }}
+          style={{ marginTop: '60px', padding: 'clamp(20px, 4vw, 40px)', position: 'relative', overflow: 'hidden' }}
         >
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg, var(--accent), #60a5fa, #34d399)' }} />
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px', flexWrap: 'wrap' }}>
-            <div style={{ fontSize: '3rem', flexShrink: 0 }}>01</div>
+            <div style={{ fontSize: '3rem', flexShrink: 0, color: 'var(--text-muted)', fontWeight: 800 }}>01</div>
             <div style={{ flex: 1 }}>
               <h2 style={{ fontSize: '1.6rem', fontFamily: 'var(--font-heading)', margin: '0 0 16px' }}>
                 My <span className="gradient-text">Mission</span>
@@ -291,7 +291,7 @@ export default function ImpactClient({ initiatives }: Props) {
                     key={v.title}
                     initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                    style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', padding: '16px', borderRadius: '10px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)' }}
+                    style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', padding: '16px', borderRadius: '10px', background: 'var(--bg-surface-light)', border: '1px solid var(--border-color)' }}
                   >
                     <span style={{ fontSize: '1.4rem', flexShrink: 0 }}>{v.icon}</span>
                     <div>
@@ -340,7 +340,7 @@ export default function ImpactClient({ initiatives }: Props) {
             </thead>
             <tbody>
               {initiatives.map((init, i) => (
-                <tr key={init.id} style={{ borderBottom: i < initiatives.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+                <tr key={init.id} style={{ borderBottom: i < initiatives.length - 1 ? '1px solid var(--border-color)' : 'none' }}>
                   <td style={{ padding: '12px', color: 'var(--text-primary)', fontWeight: 600 }}>
                     {init.icon} {init.title}
                   </td>
@@ -389,7 +389,7 @@ export default function ImpactClient({ initiatives }: Props) {
             key={activeFilter}
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))', gap: '28px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', gap: '28px' }}
           >
             {filtered.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)' }}>
