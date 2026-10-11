@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Github, BookOpen, Target, CheckCircle2, Circle, ExternalLink } from 'lucide-react'
+import { ArrowRight, ExternalLink, BookOpen, Target, CheckCircle2, Circle } from 'lucide-react'
 
 // ─── TYPES ────────────────────────────────────────────────────────────────────
 
@@ -216,7 +216,7 @@ function InitiativeCard({ item, index }: { item: InitiativeItem; index: number }
           <div style={{ display: 'flex', gap: '8px' }}>
             {item.githubUrl && (
               <a href={item.githubUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', color: 'var(--text-secondary)', textDecoration: 'none', padding: '5px 10px', border: '1px solid var(--border-color)', borderRadius: '6px' }}>
-                <Github size={13} /> GitHub
+                <ExternalLink size={13} /> GitHub
               </a>
             )}
             {item.researchUrl && (

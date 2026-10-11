@@ -3,7 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Github, BookOpen, CheckCircle2, Circle, Target, Users, Lightbulb, BarChart2, AlertTriangle, Layers } from 'lucide-react'
+import { ArrowLeft, ExternalLink, BookOpen, CheckCircle2, Circle, Target, Users, Lightbulb, BarChart2, AlertTriangle, Layers } from 'lucide-react'
 
 // ─── TYPES ────────────────────────────────────────────────────────────────────
 
@@ -158,7 +158,7 @@ export default function InitiativeDetail({ initiative: init }: { initiative: Ini
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
               {init.githubUrl && (
                 <a href={init.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 16px', fontSize: '0.82rem' }}>
-                  <Github size={14} /> GitHub Repository
+                  <ExternalLink size={14} /> GitHub Repository
                 </a>
               )}
               {init.researchUrl && (
